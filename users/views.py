@@ -18,7 +18,7 @@ class UserCreateAPIView(CreateAPIView):
     permission_classes = (AllowAny,)
 
 
-class UserRetrieveUpdateAPIView(RetrieveAPIView):
+class UserRetrieveAPIView(RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
@@ -29,9 +29,9 @@ class UserUpdateAPIView(UpdateAPIView):
     serializer_class = UserUpdateSerializer
     permission_classes = (AllowAny,)
 
-    def get_object(self):
-        user = self.request.user
-        return User.objects.filter(id=user.id)
+    # def get_object(self):
+    #     user = self.request.user
+    #     return User.objects.filter(id=user.id)
 
 
 class UserDestroyAPIView(DestroyAPIView):
