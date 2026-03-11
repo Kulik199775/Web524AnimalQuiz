@@ -185,9 +185,7 @@ fabric.properties
 # idea folder, uncomment if you don't need it
 .idea
 
-#/users/migrations/
-#/dogs/migrations/
-#reviews/migrations/*
-#!reviews/migrations/
-#!reviews/migrations/__init__.py
-#dump.rbd
+users/migrations/*
+!users/migrations/
+!users/migrations/__init__.py
+
