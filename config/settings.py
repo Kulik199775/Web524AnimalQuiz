@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os
 
-from django.conf.global_settings import STATICFILES_DIRS, CSRF_TRUSTED_ORIGINS
 from dotenv import load_dotenv
 from datetime import timedelta
 
@@ -49,10 +48,10 @@ INSTALLED_APPS = [
     # installed app
     'rest_framework',
     "django_filters",
-    'rest_framework.simplejwt',
+    'rest_framework_simplejwt',
     'corsheaders',
     'drf_yasg',
-    'redis'
+    'redis',
 
     # user apps
 ]
