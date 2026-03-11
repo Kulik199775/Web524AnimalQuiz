@@ -185,6 +185,5 @@ fabric.properties
 # idea folder, uncomment if you don't need it
 .idea
 
-users/migrations/*.py
-!users/migrations/__init__.py
+
 
