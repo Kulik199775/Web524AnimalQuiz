@@ -22,4 +22,4 @@ class QuestionAdmin(admin.ModelAdmin):
     list_display = ('id', 'section', 'question', 'answer',)
     list_filter = ('section',)
     ordering = ('id', 'section',)
-    search_fields = ('question',)
+    search_fields = ('question', 'answer',)
