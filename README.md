@@ -142,7 +142,6 @@ docker-compose up -d --build
 
 ### 4. Остановка Docker-контейнеров
 
-```bash
 docker-compose down
 ```
 
