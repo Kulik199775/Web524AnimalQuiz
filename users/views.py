@@ -3,7 +3,7 @@ from rest_framework.generics import (ListAPIView, CreateAPIView, RetrieveAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
-from sections.permissions import IsSuperUser
+from sections.permissions import IsSuperUser, IsModerator
 from users.models import User
 from users.user_serializers import UserSerializer, UserCreateSerializer, UserUpdateSerializer, UserTokenObtainPairSerializer
 
@@ -11,6 +11,7 @@ from users.user_serializers import UserSerializer, UserCreateSerializer, UserUpd
 class UserListAPIView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated, IsSuperUser | IsModerator)
 
 
 class UserCreateAPIView(CreateAPIView):

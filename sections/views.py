@@ -102,7 +102,6 @@ class QuestionRetrieveAPIView(RetrieveAPIView):
         user = member_answer.strip().lower()
         is_correct = (user == correct)
 
-        # Расширенный ответ
         response_data = {
             'is_correct': is_correct,
             'your_answer': member_answer,
