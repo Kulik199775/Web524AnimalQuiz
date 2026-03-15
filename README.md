@@ -96,9 +96,7 @@ source .venv/bin/activate  # для Linux/Mac
 pip install -r requirements.txt
 
 # Создание базы данных
-Создайте базу данных при помощи команды:
-```bash
-    python manage.py ccdb
+python manage.py ccdb
 ```
 
 # Создание миграций
