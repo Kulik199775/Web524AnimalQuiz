@@ -20,5 +20,3 @@ class SectionListSerializer(ModelSerializer):
     class Meta:
         model = Section
         fields = ('id', 'title', 'section_content_title')
-
-

@@ -1,7 +1,6 @@
 from rest_framework.test import APITestCase
 from rest_framework import status
 
-from sections.models import Section
 from sections.tests.utils import get_admin_user, get_member_user, get_test_section
 
 
@@ -52,24 +51,24 @@ class SectionsTestAdmin(APITestCase):
 
 
 class SectionsTestMember(APITestCase):
-        def setUp(self):
-            self.user = get_member_user()
-            response = self.client.post('/users/token/', {'email': self.user.email, 'password':'qwerty'},
-                                        format='json')
-            self.access_token = response.json().get('access')
-            self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
-            self.test_section = get_test_section()
+    def setUp(self):
+        self.user = get_member_user()
+        response = self.client.post('/users/token/', {'email': self.user.email, 'password': 'qwerty'},
+                                    format='json')
+        self.access_token = response.json().get('access')
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
+        self.test_section = get_test_section()
 
-        def test_06_section_create_forbidden(self):
-            data = {
-                'title': 'Test Section Create Forbidden',
-                'description': 'Test description Create Forbidden',
-            }
-            response = self.client.post('/section/create/', data=data)
-            self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-            self.assertEqual(response.json().get('detail'), 'У вас недостаточно прав для выполнения данного действия.')
+    def test_06_section_create_forbidden(self):
+        data = {
+            'title': 'Test Section Create Forbidden',
+            'description': 'Test description Create Forbidden',
+        }
+        response = self.client.post('/section/create/', data=data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.json().get('detail'), 'У вас недостаточно прав для выполнения данного действия.')
 
-        def test_07_section_delete_forbidden(self):
-            response = self.client.delete(f'/section/{self.test_section.id}/delete/')
-            self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-            self.assertEqual(response.json().get('detail'), 'You are not a superuser.')
+    def test_07_section_delete_forbidden(self):
+        response = self.client.delete(f'/section/{self.test_section.id}/delete/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.json().get('detail'), 'You are not a superuser.')

@@ -24,8 +24,6 @@ class QuestionTestAdmin(APITestCase):
         self.assertEqual(response.json()['question'], 'Test Question')
 
     def test_17_question_is_correct(self):
-        correct_answer = self.question.answer.title
-
         answer = {
             'member_answer': 'Test Title Content',
         }
