@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  redis:
+    image: redis
+    ports:
+      - '6379:6379'
+    restart: always
+
+  postgres:
+    image: postgres:15
+    container_name: postgres_524_animal_quiz
+    env_file: .env
+    user: ${POSTGRESQL_USER_DOCKER}
+    environment:
+      POSTGRES_USER: ${POSTGRESQL_USER_DOCKER}
+      POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD_DOCKER}
+      POSTGRES_DB: ${POSTGRESQL_DATABASE_DOCKER}
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  api:
+    build: .
+    tty: true
+    command: >
+      bash -c "python manage.py makemigrations &&
+      python manage.py migrate &&
+      python manage.py loaddata users_fixture.json &&
+      python manage.py loaddata sections_fixture.json &&
+      python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - '8000:8000'
+#    environment:
+#      - POSTGRES_HOST=postgres
+#      - REDIS_HOST=redis
+    env_file: .env
+    volumes:
+      - .:/code
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+volumes:
+  postgres_data:

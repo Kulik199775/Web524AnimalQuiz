@@ -16,6 +16,14 @@
     }
 },
 {
+    "model": "sections.section",
+    "pk": 3,
+    "fields": {
+        "title": "test_update",
+        "description": "test_update_patch"
+    }
+},
+{
     "model": "sections.content",
     "pk": 3,
     "fields": {

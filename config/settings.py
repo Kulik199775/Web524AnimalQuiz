@@ -98,28 +98,46 @@ WSGI_APPLICATION = "config.wsgi.application"
 #     }
 # }
 
-# Local DB MSSQLExpress
-USER = os.getenv('MS_SQL_USER')
-PASSWORD = os.getenv("MS_SQL_KEY")
-HOST = os.getenv("MS_SQL_SERVER")
-DATABASE = os.getenv("MS_SQL_DATABASE")
-DRIVER = os.getenv("MS_SQL_DRIVER")
-PAD_DATABASE = os.getenv('MS_SQL_PAD_DATABASE')
+# Docker DB PostgreSQL
+POSTGRESQL_USER_DOCKER = os.getenv('POSTGRESQL_USER_DOCKER')
+POSTGRESQL_DATABASE_DOCKER = os.getenv('POSTGRESQL_DATABASE_DOCKER')
+POSTGRESQL_PASSWORD_DOCKER = os.getenv('POSTGRESQL_PASSWORD_DOCKER')
+POSTGRESQL_PORT_DOCKER = os.getenv('POSTGRESQL_PORT_DOCKER')
+POSTGRESQL_HOST_DOCKER = os.getenv('POSTGRESQL_HOST_DOCKER')
 
 DATABASES = {
     "default": {
-        "ENGINE": "mssql",
-        "NAME": DATABASE,
-        'PASSWORD': PASSWORD,
-        'HOST': HOST,
-        'PORT': '',
-        'OPTIONS': {
-            'driver': DRIVER,
-            'extra_params': 'TrustServerCertificate=yes;',
-
-        }
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": POSTGRESQL_DATABASE_DOCKER,
+        'USER': POSTGRESQL_USER_DOCKER,
+        'PORT': POSTGRESQL_PORT_DOCKER,
+        'PASSWORD': POSTGRESQL_PASSWORD_DOCKER,
+        'HOST': POSTGRESQL_HOST_DOCKER,
     }
 }
+
+# # Local DB MSSQLExpress
+# USER = os.getenv('MS_SQL_USER')
+# PASSWORD = os.getenv("MS_SQL_KEY")
+# HOST = os.getenv("MS_SQL_SERVER")
+# DATABASE = os.getenv("MS_SQL_DATABASE")
+# DRIVER = os.getenv("MS_SQL_DRIVER")
+# PAD_DATABASE = os.getenv('MS_SQL_PAD_DATABASE')
+#
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "mssql",
+#         "NAME": DATABASE,
+#         'PASSWORD': PASSWORD,
+#         'HOST': HOST,
+#         'PORT': '',
+#         'OPTIONS': {
+#             'driver': DRIVER,
+#             'extra_params': 'TrustServerCertificate=yes;',
+#
+#         }
+#     }
+# }
 
 
 # Password validation
@@ -180,6 +198,12 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
     # 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    "TEST_REQUEST_RENDERER_CLASSES": [
+        'rest_framework.renderers.MultiPartRenderer',
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.TemplateHTMLRenderer',
+    ]
 }
 
 SIMPLE_JWT = {
